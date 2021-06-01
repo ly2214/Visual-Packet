@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<style>
+    body{margin: 10px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    /* 竖滚动条 */
+    .layui-layout-body {    
+       overflow-y: auto;
+   }
+</style>
+{% endblock %}
+
+{% block body %}
+        <div id="sankey" style="width:1000px; height:600px;"></div>
+        <div id="line" style="width:1000px; height:600px;"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var chart1 = echarts.init(document.getElementById('sankey'), 'white', {renderer: 'canvas'});
+    var chart2 = echarts.init(document.getElementById('line'), 'white', {renderer: 'canvas'});
+
+    $(
+        function () {
+            fetchData(chart1, chart2);
+        }
+    );
+
+    function fetchData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:8000/One_APP/sankeyflow_View",
+            dataType: 'json',
+            success: function (result) {
+                chart1.setOption($.parseJSON(result.sankey));   // 从服务端获取到的是一个json字符串，前端接收到这个json格式的字符串不可以直接用，要用JSON.parse()或$.parseJSON()处理成一个json对象
+                chart2.setOption($.parseJSON(result.line));
+            }
+        });
+    }
+</script>
+{% endblock %}

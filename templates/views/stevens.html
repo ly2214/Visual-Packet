@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;background-color: #ffffff;" id='container'>
+        <legend></legend>
+        {{ data|safe }}
+</fieldset>
+
+{% endblock %}
+
+<!-- {% block scripts %}
+<script>
+    var chart = echarts.init(document.getElementById('line'), 'white', {renderer: 'canvas'});
+
+    $(
+        function () {
+            fetchData();
+        }
+    );
+
+    function fetchData() {
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:8000/One_APP/chart_View",
+            dataType: 'json',
+            success: function (result) {
+                console.log('成功！')
+                // var data = result.data;
+                // chart.setOption(data);
+
+//                 // var charts = document.createElement("div");
+//                 for(i=0;i<data.length;i++){
+//                     let parent = document.getElementById('container');
+// 　　　　             let div = document.createElement("div");   // 添加 div
+//                     div.setAttribute("id", 'line'+i);
+//                     div.setAttribute("style", "width:1000px; height:600px;");
+
+//                     parent.appendChild(div);
+//                     var chart = echarts.init(document.getElementById('line'+i), 'white', {renderer: 'canvas'});
+//                     chart.setOption($.parseJSON(data[i]));
+//                 }
+
+                //     var divide = document.createElement("div");
+                //     var chart2 = echarts.init(document.getElementById('line'), 'white', {renderer: 'canvas'});
+                //     chart.setOption($.parseJSON(data[i]));
+
+                //     charts.appendChild(divide);
+                //     console.log($.parseJSON(data[i]));
+                // }
+                // $('#carou').html(
+                //     charts
+                // )
+                // }
+            }
+        });
+    }
+</script>
+{% endblock %} -->

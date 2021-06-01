@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<style>
+    body{margin: 10px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+    /* 竖滚动条 */
+    .layui-layout-body {    
+       overflow-y: auto;
+   }
+</style>
+{% endblock %}
+
+{% block body %}
+        <div id="flow" style="width:1000px; height:800px;"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+        var chart = echarts.init(document.getElementById('flow'), 'white', {renderer: 'canvas'});
+
+        $(
+            function () {
+                fetchData(chart);
+            }
+        );
+
+        function fetchData() {
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/One_APP/tcpflow_View",
+                dataType: 'json',
+                success: function (result) {
+                    option = {
+                        title: {
+                            text: 'Graph'
+                        },
+                        
+                        //结点的高亮文本显示
+                        tooltip: {
+                            formatter: function (x) {
+                                return x.data.des;
+                            }
+                        },
+                        
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                mark: {
+                                    show: true
+                                },
+                                
+                                restore: {
+                                    show: true
+                                },
+                                
+                                saveAsImage: {
+                                    show: true
+                                }
+                            }
+                        },
+                        // 结点领域值
+                        legend: [{
+                            data: result.categories.map(function (a) {
+                                return a.name;
+                            })
+                        }],
+                        series: [{
+                            type: 'graph', 
+                            layout: 'force', 
+                            symbolSize: 10, 
+                            roam: true,                         // 鼠标缩放和平移漫游
+                            edgeSymbol: ['circle', 'arrow'],
+                            edgeSymbolSize: [2, 10],
+                            edgeLabel: {
+                                normal: {
+                                    textStyle: {
+                                        fontSize: 20
+                                    }
+                                }
+                            },
+                            force: {
+                                repulsion: 5000,                // 节点之间的斥力因子
+                                edgeLength: [300, 500]           // 边的两个节点之间的距离，这个距离也会受 repulsion
+                            },
+                            draggable: true,                   // 节点是否可拖拽，只在使用力引导布局的时候有用
+                            edgeLabel: {
+                                normal: {
+                                    show: true,
+                                    formatter: function (x) {
+                                        return x.data.name;
+                                    }
+                                }
+                            },
+                            label: {
+                                normal: {
+                                    show: true,
+                                    textStyle: {}
+                                }
+                            },
+                            emphasis: {
+                                focus: 'adjacency',
+                                label: {
+                                    position: 'right',
+                                    show: true
+                                },
+                                lineStyle: {
+                                    width: 10
+                                }   
+                            },
+                
+                            // 数据
+                            data: result.node,
+                            links: result.link,
+                            categories: result.categories,
+                        }]
+                    };
+
+                    chart.setOption(option);
+                }
+            });
+        }
+
+</script>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header custom-header">
+            
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item slide-sidebar" lay-unselect>
+                    <a href="javascript:;" class="icon-font"><i class="ai ai-menufold"></i></a>
+                </li>
+            </ul>
+
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">Setting
+                    <dl class="layui-nav-child">
+                        <dd><a href=""></a>Help Center</dd>
+                        <dd><a href="{%url 'login' %}">Quit</a></dd>
+                    </dl>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="layui-side custom-admin">
+            <div class="layui-side-scroll">
+
+                <div class="custom-logo">
+                    <img src='{%static "images/logo.png" %}' alt=""/>
+                    <h1>Visual Packet</h1>
+                </div>
+                <ul id="Nav" class="layui-nav layui-nav-tree">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe609;</i>
+                            <em>Home Page</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="{%url 'console' %}">Console</a></dd>
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe857;</i>
+                            <em>Flow Graph</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="{%url 'table' %}">TCP Flows</a></dd>
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe612;</i>
+                            <em>TCP Stream Graph</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="{%url 'operaterule' %}">I/O Graphs</a></dd>
+                            <dd><a href="{%url 'operaterule' %}">tcptrace</a></dd>
+                            <dd><a href="{%url 'table' %}">stevens</a></dd>
+                            <dd><a href="{%url 'operaterule' %}">RTT</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="layui-body">
+             <div class="layui-tab app-container" lay-allowClose="true" lay-filter="tabs">
+                <ul id="appTabs" class="layui-tab-title custom-tab"></ul>
+                <div id="appTabPage" class="layui-tab-content"></div>
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <p>© 2018 更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
+        </div>
+
+        <div class="mobile-mask"></div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src='{%static "js/home.js" %}'></script>
+{% endblock %}
